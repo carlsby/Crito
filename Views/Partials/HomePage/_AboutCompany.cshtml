@@ -1,0 +1,47 @@
+﻿@using Umbraco.Cms.Core.Models
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+<div class="container ac-con">
+    <div class="row">
+        <div class="col-12 col-lg-6 ac-col">
+                @{
+                    var interviewImage = Model.Value<MediaWithCrops>("interviewImage");
+                    if (interviewImage != null)
+                    {
+                        <img class="ac-img" src="@interviewImage.MediaUrl()" />
+                    }
+                }
+            <div class="ac-text-card">
+                <h4 class="ac-text-title">
+                    @Model.Value("interviewName"), <span class="ac-founder-span">
+                        @Model.Value("interviewJobTitle")
+                    </span>
+                </h4>
+                @{
+                    if (Model.Value("interviewPersonQuote") != null){
+                       <p class="ac-text-p">
+                            "@Model.Value("interviewPersonQuote")"
+                       </p>
+                    }
+                }               
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 ac-details">
+            <div class="ac-title">
+                About Company
+            </div>
+            <h1 class="ac-header-title">
+                @Model.Value("interviewTitle")
+            </h1>
+            <p class="ac-p">
+                @Model.Value("interviewText")
+            </p>
+            <div class="ac-bottom-div">
+                <button class="ac-btn">
+                    Learn More <i class="fa-light fa-arrow-up-right"></i>
+                </button>
+                <a class="ac-intro-link" href="#"><i class="fa-solid fa-play play-btn"></i> Intro Video</a>
+            </div>
+        </div>
+    </div>
+</div>
