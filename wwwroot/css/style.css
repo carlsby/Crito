@@ -372,6 +372,11 @@ header {
     padding: 20px;
 }
 
+    .service-card:hover {
+        background: #F9D783;
+        transition: 0.3s;
+    }
+
 .service-card-title {
     margin-top: 50px;
 }
@@ -650,7 +655,7 @@ header {
 
 @media (min-width: 375px) {
     .tes-card {
-        overflow-x: scroll;
+        overflow-y: scroll;
         height: 200px;
     }
 
@@ -666,6 +671,12 @@ header {
     .tes-auth-p {
         font-size: 11px;
         display: flex;
+    }
+}
+
+@media (min-width: 1200px) {
+    .tes-card {
+        overflow: visible;
     }
 }
 
@@ -691,6 +702,8 @@ header {
     color: black;
     text-align: right;
     height: 45px;
+    display: flex;
+    align-items: center;
 }
 
     .an-ba-btn:hover {
@@ -698,6 +711,10 @@ header {
         background: black;
         color: white;
     }
+
+.article-link {
+    color: black;
+}
 
 .an-card {
     margin: 15px;
@@ -912,6 +929,35 @@ header {
     width: 85%;
 }
 
+.on-img {
+    height: 250px;
+    object-fit: cover;
+}
+
+.on-title {
+    margin-bottom: 30px;
+}
+
+.on-pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.on-link {
+    background: #303234;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#on-arrow {
+    font-size: 12px;
+}
+
 @media (min-width: 375px) {
     .on-card {
         display: block;
@@ -941,7 +987,6 @@ header {
 }
 
 .article-title {
-    width: 65%;
     font-size: 45px;
 }
 

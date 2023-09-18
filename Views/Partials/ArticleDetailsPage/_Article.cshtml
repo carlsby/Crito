@@ -1,52 +1,36 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Services;
+@using Umbraco.Cms.Core.Models.PublishedContent;
+@inject IUserService UserService;
+
+@{
+    var userService = UserService;
+    var image = Model.Value<IPublishedContent>("articleImage");
+}
 
 <div class="container article-con">
     <div class="row">
         <div class="col-8">
             <h1 class="article-title">
-                How To Use Digitalization In The Classroom
+                @Model.Name()
             </h1>
             <ul class="article-list d-flex align-items-center">
-                <li class="article-item">Mar 25, 2023</li>
+                <li class="article-item">@Model.CreateDate.ToString("MMM dd, yyyy")</li>
                 <li class="article-item"><i class="fa-solid fa-circle" id="article-circle"></i></li>
-                <li class="article-item">Business</li>
+                <li class="article-item">@Model.Value("articleCategory")</li>
                 <li class="article-item"><i class="fa-solid fa-circle" id="article-circle"></i></li>
-                <li class="article-item">Kimberly Hansen</li>
+                <li class="article-item">@Model.CreatorName(userService)</li>
             </ul>
-            <img class="article-img" src="~/images/nad/nad_big.png" />
+            <img class="article-img" src="@image.MediaUrl()" />
             <p class="article-p">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. 
-            </p>
-            <p class="article-p">
-                Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. uspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.
-            </p>
-            <p class="article-p">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. unc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.
-            </p>
-            <p class="article-p">
-                Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.
-            </p>
-            <div class="row">
-                <div class="col-1 article-quote-col d-flex justify-content-center">
-                    <i class="fa-sharp fa-solid fa-quote-left" id="quote"></i>
-                </div>
-                <div class="col-11 article-quote-col d-flex justify-content-baseline">
-                    <h5 class="article-quote">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.
-                    </h5>
-                </div>
-            </div>
-            <p class="article-p">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. unc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                @Model.Value("articleContent")
             </p>
             <div class="article-tags">
                 <ul class="article-tags-list">
-                    <li class="article-tag">Digitalization</li>
-                    <li class="article-tag">School</li>
-                    <li class="article-tag">IT</li>
-                    <li class="article-tag">Design</li>
-                    <li class="article-tag">Work</li>
-                    <li class="article-tag">Tech</li>
+                    @foreach (var tag in Model.Value<IEnumerable<string>>("articleTags"))
+                    {
+                        <li class="article-tag">@tag</li>
+                    }
                 </ul>
             </div>
         </div>

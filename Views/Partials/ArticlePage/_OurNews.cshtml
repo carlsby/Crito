@@ -1,99 +1,89 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Models.PublishedContent;
+
+@{
+    var itemsPerPage = 6;
+    var pageNumber = 1;
+    if (!int.TryParse(Context.Request.Query["page"], out pageNumber))
+    {
+        pageNumber = 1;
+    }
+
+	var selection = Umbraco?.Content(Guid.Parse("0a097478-c50a-43e4-8428-40517a242aa0"))?
+    .ChildrenOfType("ArticleDetailsPage")?
+    .Where(x => x.IsVisible())
+    .OrderByDescending(x => x.CreateDate).ToList();
+    
+    var totalArticles = selection?.Count() ?? 0;
+    var pagedItems = selection?.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
+    
+}
 
 <div class="container on-con">
     <h1 class="on-title">
         Our News & Articles
     </h1>
     <div class="row">
-        <div class="col-6 col-lg-4 on-card">
-            <div class="on-date">
-                <h5 class="on-date-number">25</h5>
-                <p class="on-date-month">Mar</p>
-            </div>
-            <img class="on-img" src="~/images/na/ona1.png" />
-            <p class="on-underline-p">Business</p>
-            <h4 class="on-underline-title">How To Use Digitalization In The Classroom</h4>
-            <p class="on-title-p">Lorem, ipsum dotor sit amet consectetur adipisicing elit. Architecto sed hic libero.</p>
-        </div>
-        <div class="col-6 col-lg-4 on-card">
-            <div class="on-date">
-                <h5 class="on-date-number">17</h5>
-                <p class="on-date-month">Mar</p>
-            </div>
-            <img class="on-img" src="~/images/na/ona2.png" />
-            <p class="on-underline-p">Business</p>
-            <h4 class="on-underline-title">How To Implement Chat GPT In Your Projects</h4>
-            <p class="on-title-p">Lorem, ipsum dotor sit amet consectetur adipisicing elit. Architecto sed hic libero.</p>
-        </div>
-        <div class="col-6 col-lg-4 on-card">
-            <div class="on-date">
-                <h5 class="on-date-number">13</h5>
-                <p class="on-date-month">Mar</p>
-            </div>
-            <img class="on-img" src="~/images/na/ona3.png" />
-            <p class="on-underline-p">Business</p>
-            <h4 class="on-underline-title">The Guide To Support Modern CSS Design</h4>
-            <p class="on-title-p">Lorem, ipsum dotor sit amet consectetur adipisicing elit. Architecto sed hic libero.</p>
-        </div>
-        <div class="col-6 col-lg-4 on-card">
-            <div class="on-date">
-                <h5 class="on-date-number">12</h5>
-                <p class="on-date-month">Mar</p>
-            </div>
-            <img class="on-img" src="~/images/na/ona4.png" />
-            <p class="on-underline-p">Business</p>
-            <h4 class="on-underline-title">Why You Need To Implement The Fivs S's</h4>
-            <p class="on-title-p">Lorem, ipsum dotor sit amet consectetur adipisicing elit. Architecto sed hic libero.</p>
-        </div>
-        <div class="col-6 col-lg-4 on-card">
-            <div class="on-date">
-                <h5 class="on-date-number">07</h5>
-                <p class="on-date-month">Mar</p>
-            </div>
-            <img class="on-img" src="~/images/na/ona5.png" />
-            <p class="on-underline-p">Business</p>
-            <h4 class="on-underline-title">Get More Involved With Your End Users</h4>
-            <p class="on-title-p">Lorem, ipsum dotor sit amet consectetur adipisicing elit. Architecto sed hic libero.</p>
-        </div>
-        <div class="col-6 col-lg-4 on-card">
-            <div class="on-date">
-                <h5 class="on-date-number">02</h5>
-                <p class="on-date-month">Mar</p>
-            </div>
-            <img class="on-img" src="~/images/na/ona6.png" />
-            <p class="on-underline-p">Business</p>
-            <h4 class="on-underline-title">Guided Tour Of Our New Head Office In Stockholm</h4>
-            <p class="on-title-p">Lorem, ipsum dotor sit amet consectetur adipisicing elit. Architecto sed hic libero.</p>
-        </div>
-        <div class="col-6 col-lg-4 on-card">
-            <div class="on-date">
-                <h5 class="on-date-number">28</h5>
-                <p class="on-date-month">Feb</p>
-            </div>
-            <img class="on-img" src="~/images/na/ona7.png" />
-            <p class="on-underline-p">Business</p>
-            <h4 class="on-underline-title">Using Business Intelligence To Get Insights Into Our Businesses</h4>
-            <p class="on-title-p">Lorem, ipsum dotor sit amet consectetur adipisicing elit. Architecto sed hic libero.</p>
-        </div>
-        <div class="col-6 col-lg-4 on-card">
-            <div class="on-date">
-                <h5 class="on-date-number">18</h5>
-                <p class="on-date-month">Feb</p>
-            </div>
-            <img class="on-img" src="~/images/na/ona8.png" />
-            <p class="on-underline-p">Business</p>
-            <h4 class="on-underline-title">Apple Has Released New Products. Are They Any Good?</h4>
-            <p class="on-title-p">Lorem, ipsum dotor sit amet consectetur adipisicing elit. Architecto sed hic libero.</p>
-        </div>
-        <div class="col-6 col-lg-4 on-card">
-            <div class="on-date">
-                <h5 class="on-date-number">11</h5>
-                <p class="on-date-month">Feb</p>
-            </div>
-            <img class="on-img" src="~/images/na/ona9.png" />
-            <p class="on-underline-p">Business</p>
-            <h4 class="on-underline-title">How To Improve Your Teams And Get A Better Result</h4>
-            <p class="on-title-p">Lorem, ipsum dotor sit amet consectetur adipisicing elit. Architecto sed hic libero.</p>
-        </div>
+        
+        @if (pagedItems != null)
+        {
+            @foreach (var item in pagedItems)
+        	{
+        	    var url = item.Url();
+                var dayOfMonth = item.CreateDate.Day;
+                var month = item.CreateDate.ToString("MMM");
+                var image = item.Value<IPublishedContent>("articleImage");
+                var category = item.Value("articleCategory");
+                var title = item.Name();
+                var description = item.Value("articlePreamble");
+        	
+                    <div class="col-6 col-lg-4 on-card">
+                        <a href="@url" class="article-link">
+                            <div class="on-date">
+                                <h5 class="on-date-number">@dayOfMonth</h5>
+                                <p class="on-date-month">@month</p>
+                            </div>
+                            <img class="on-img" src="@image!.MediaUrl()" />
+                            <p class="on-underline-p">@category</p>
+                            <h4 class="on-underline-title">@title</h4>
+                            <p class="on-title-p">@description</p>
+                        </a>
+                </div>
+            }
+    	}
+        
     </div>
+    @if (totalArticles > itemsPerPage)
+    {
+        <nav class="on-pagination" aria-label="Page navigation">
+            @if (pageNumber > 1)
+            {
+                <a href="?page=@(pageNumber - 1)" class="on-link" aria-label="Previous">
+                    <i class="fa-sharp fa-solid fa-chevron-left" id="on-arrow"></i>
+                </a>
+            }
+
+            @for (int i = 1; i <= Math.Ceiling((decimal)totalArticles / itemsPerPage); i++)
+            {
+                if (i == pageNumber)
+                {
+                    <a href="#" class="on-link on-active">@i</a>
+                }
+                else
+                {
+                    <a href="?page=@i" class="on-link">@i</a>
+                }
+            }
+
+            @if (pageNumber < Math.Ceiling((decimal)totalArticles / itemsPerPage))
+            {
+                <a href="?page=@(pageNumber + 1)" class="on-link" aria-label="Next">
+                    <i class="fa-sharp fa-solid fa-chevron-right" id="on-arrow"></i>
+                </a>
+            }
+
+        </nav>
+    }
+   
 </div>
+
