@@ -1,0 +1,28 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.TestimonialBlockList)Model.Content;
+    //var settings = (ContentModels.MyElementTypeAliasOfSettings)Model.Settings;
+}
+
+
+<div class="col-4 tes-card">
+
+    @for (int i = 0; i < content.TestimonialNumberOfStars; i++)
+    {
+        <i class="fa-solid fa-star" id="tes-star"></i>
+    }
+
+    <p class="tes-p">
+        "@content.TestimonialText"
+    </p>
+    <div class="row tes-bottom-con">
+        <div class="col-12 col-lg-3 tes-img-con">
+            <img class="tes-img" src="@content.TestimonialImage.MediaUrl()" />
+        </div>
+        <div class="col-9 tes-author">
+            <h5 class="tes-auth-title">@content.TestimonialName</h5>
+            <p class="tes-auth-p">@content.TestimonialJobTitle, @content.TestimonialJob</p>
+        </div>
+    </div>
+</div>

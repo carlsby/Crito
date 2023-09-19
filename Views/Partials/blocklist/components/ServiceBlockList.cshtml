@@ -1,0 +1,15 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    var content = (ContentModels.ServiceBlockList)Model.Content;
+    //var settings = (ContentModels.MyElementTypeAliasOfSettings)Model.Settings;
+}
+
+<div class="col-3 service-card">
+    <i class="fa-light fa-horizontal-rule"></i>
+    <h5 class="service-card-title">@content.ServiceCardTitle</h5>
+    <p>@content.ServiceCardDesc</p>
+    <div class="service-btn-con">
+        <i class="fa-light fa-arrow-right" id="service-arrow-right"></i>
+    </div>
+</div>

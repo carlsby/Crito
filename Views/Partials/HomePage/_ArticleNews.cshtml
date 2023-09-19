@@ -17,7 +17,6 @@
 
     var totalArticles = selection?.Count() ?? 0;
     var pagedItems = selection?.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
-
 }
 
 <section class="an-section">
@@ -44,6 +43,11 @@
                     var category = item.Value("articleCategory");
                     var title = item.Name();
                     var description = item.Value("articlePreamble");
+
+                    if (item.Key == Model.Key)
+                    {
+                        continue;
+                    }
 
                     <div class="col-6 col-lg-4 on-card">
                         <a href="@url" class="article-link">

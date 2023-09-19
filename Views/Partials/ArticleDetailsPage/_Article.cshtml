@@ -6,6 +6,14 @@
 @{
     var userService = UserService;
     var image = Model.Value<IPublishedContent>("articleImage");
+
+	var selection = Umbraco?.Content(Guid.Parse("0a097478-c50a-43e4-8428-40517a242aa0"))?
+    .ChildrenOfType("ArticleDetailsPage")?
+    .Where(x => x.IsVisible())
+    .OrderByDescending(x => x.CreateDate).ToList();
+    
+    var totalArticles = selection?.Count() ?? 0;
+
 }
 
 <div class="container article-con">
@@ -21,13 +29,13 @@
                 <li class="article-item"><i class="fa-solid fa-circle" id="article-circle"></i></li>
                 <li class="article-item">@Model.CreatorName(userService)</li>
             </ul>
-            <img class="article-img" src="@image.MediaUrl()" />
+            <img class="article-img" src="@image!.MediaUrl()" />
             <p class="article-p">
                 @Model.Value("articleContent")
             </p>
             <div class="article-tags">
                 <ul class="article-tags-list">
-                    @foreach (var tag in Model.Value<IEnumerable<string>>("articleTags"))
+                    @foreach (var tag in Model.Value<IEnumerable<string>>("articleTags")!)
                     {
                         <li class="article-tag">@tag</li>
                     }
@@ -37,18 +45,26 @@
         <div class="col-4">
             <input class="article-search" placeholder="Type to search..."/>
             <div class="article-rp-div">
-                <h4 class="article-rp-title">Recent Posts</h4>
-                <h6 class="article-rp-ar">How To Blow Through Capital At An Incredible Rate</h6>
-                <p class="article-rp-date">Jan 14, 2020</p>
-                <hr />
-                <h6 class="article-rp-ar">Design Studios That Everyone Should Know About?</h6>
-                <p class="article-rp-date">Jan 14, 2020</p>
-                <hr />
-                <h6 class="article-rp-ar">How did we get 1M+ visitors in 30 days without anything!</h6>
-                <p class="article-rp-date">Jan 14, 2020</p>
-                <hr />
-                <h6 class="article-rp-ar">Figma On Figma: How We Built Our Website Design System</h6>
-                <p class="article-rp-date">Jan 14, 2020</p>
+                <h4 class="article-rp-title">Recent posts</h4>
+
+                @foreach (var item in selection!.Take(5))
+                {
+                    if (item.Key == Model.Key)
+                    {
+                        continue;
+                    }
+
+                    var url = item.Url();
+                    var date = item.CreateDate.ToString("MMM, dd, yyyy");
+                    var title = item.Name();
+
+                    <a href="@url" class="article-link">
+                        <h6 class="article-rp-ar">@title</h6>
+                        <p class="article-rp-date">@date</p>
+                    </a>
+                    <hr />
+                }
+
             </div>
             <div class="article-rp-div">
                 <h4 class="article-rp-title">Categories</h4>

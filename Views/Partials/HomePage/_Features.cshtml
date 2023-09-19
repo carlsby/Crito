@@ -1,7 +1,7 @@
 ﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @using Umbraco.Cms.Core.Models.Blocks;
 @using Umbraco.Cms.Core.Models
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.HomePage>
 
 <div class="container feature-con">
     <div class="row">
@@ -20,22 +20,7 @@
         </div>
         <div class="col-12 col-lg-8 feature-right-col">
             <div class="row">
-                @{
-                    var featureBlocks = Model.Value<IEnumerable<BlockListItem>>("featureBlockList");
-    
-                    foreach (var featureBlock in featureBlocks!)
-                    {
-                        var content = (ContentModels.FeatureBlockList)featureBlock.Content;
-    
-                        <div class="col-6">
-                            <div class="feature-icon">
-                                <i class="@content.FeatureIcon"></i>
-                            </div>
-                            <h4>@content.FeatureTitle</h4>
-                            <p>@content.FeatureText</p>
-                        </div>
-                    }
-                }
+            @Html.GetBlockListHtml(Model.FeatureBlockList)
             </div>
         </div>
     </div>

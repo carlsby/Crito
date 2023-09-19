@@ -1,42 +1,14 @@
 ﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @using Umbraco.Cms.Core.Models.Blocks;
 @using Umbraco.Cms.Core.Models
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<HomePage>
 
 <section class="tes-section">
     <div class="container tes-con">
         <p class="tes-title">Testimonial</p>
         <h1 class="tes-header-title">What Our Client Says</h1>
         <div class="row tes-row-con">
-            @{
-                var testimonialBlocks = Model.Value<IEnumerable<BlockListItem>>("testimonialBlocks");
-
-                foreach (var testimonialBlock in testimonialBlocks!.Take(3).ToList())
-                {
-                    var content = (ContentModels.TestimonialBlockList)testimonialBlock.Content;
-
-                    <div class="col-4 tes-card">
-
-                        @for (int i = 0; i < content.TestimonialNumberOfStars; i++)
-                        {
-                            <i class="fa-solid fa-star" id="tes-star"></i>
-                        }
-
-                        <p class="tes-p">
-                            "@content.TestimonialText"
-                        </p>
-                        <div class="row tes-bottom-con">
-                            <div class="col-12 col-lg-3 tes-img-con">
-                                <img class="tes-img" src="@content.TestimonialImage.MediaUrl()" />
-                            </div>
-                            <div class="col-9 tes-author">
-                                <h5 class="tes-auth-title">@content.TestimonialName</h5>
-                                <p class="tes-auth-p">@content.TestimonialJobTitle, @content.TestimonialJob</p>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
+                @Html.GetBlockListHtml(Model.TestimonialBlocks)
         </div>
     </div>
 </section>

@@ -1,7 +1,7 @@
 ﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @using Umbraco.Cms.Core.Models.Blocks;
 @using Umbraco.Cms.Core.Models
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.HomePage>
 
 <section class="team-section">
     <div class="container team-con">
@@ -15,20 +15,7 @@
             </div>
         </div>
         <div class="row">
-            @{
-                var memberBlocks = Model.Value<IEnumerable<BlockListItem>>("memberBlockList");
-
-                foreach (var memberBlock in memberBlocks!)
-                {
-                    var content = (ContentModels.TeamBlockList)memberBlock.Content;
-
-                    <div class="col-3 team-card">
-                        <img class="team-img" src="@content.MemberImage.MediaUrl()"  />
-                        <h5 class="team-name">@content.MemberName</h5>
-                        <p class="team-job">@content.MemberJobTitle</p>
-                    </div>
-                }
-            }
+            @Html.GetBlockListHtml(Model.MemberBlockList)
         </div>
 
     </div>

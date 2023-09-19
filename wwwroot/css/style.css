@@ -716,6 +716,10 @@ header {
     color: black;
 }
 
+    .article-link:hover {
+        color: gray;
+    }
+
 .an-card {
     margin: 15px;
     position: relative;
