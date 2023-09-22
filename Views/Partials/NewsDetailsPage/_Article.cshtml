@@ -1,0 +1,82 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Services;
+@using Umbraco.Cms.Core.Models.PublishedContent;
+@inject IUserService UserService;
+
+@{
+    var userService = UserService;
+    var image = Model.Value<IPublishedContent>("articleImage");
+
+	var selection = Umbraco?.Content(Guid.Parse("0a097478-c50a-43e4-8428-40517a242aa0"))?
+    .ChildrenOfType("NewsDetailsPage")?
+    .Where(x => x.IsVisible())
+    .OrderByDescending(x => x.CreateDate).ToList();
+    
+    var totalArticles = selection?.Count() ?? 0;
+
+}
+
+<div class="container article-con">
+    <div class="row">
+        <div class="col-8">
+            <h1 class="article-title">
+                @Model.Name()
+            </h1>
+            <ul class="article-list d-flex align-items-center">
+                <li class="article-item">@Model.CreateDate.ToString("MMM dd, yyyy")</li>
+                <li class="article-item"><i class="fa-solid fa-circle" id="article-circle"></i></li>
+                <li class="article-item">@Model.Value("articleCategory")</li>
+                <li class="article-item"><i class="fa-solid fa-circle" id="article-circle"></i></li>
+                <li class="article-item">@Model.CreatorName(userService)</li>
+            </ul>
+            <img class="article-img" src="@image!.MediaUrl()" />
+            <p class="article-p">
+                @Model.Value("articleContent")
+            </p>
+            <div class="article-tags">
+                <ul class="article-tags-list">
+                    @foreach (var tag in Model.Value<IEnumerable<string>>("articleTags")!)
+                    {
+                        <li class="article-tag">@tag</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-4">
+            <input class="article-search" placeholder="Type to search..."/>
+            <div class="article-rp-div">
+                <h4 class="article-rp-title">Recent posts</h4>
+
+                @foreach (var item in selection!.Take(5))
+                {
+                    if (item.Key == Model.Key)
+                    {
+                        continue;
+                    }
+
+                    var url = item.Url();
+                    var date = item.CreateDate.ToString("MMM, dd, yyyy");
+                    var title = item.Name();
+
+                    <a href="@url" class="article-link">
+                        <h6 class="article-rp-ar">@title</h6>
+                        <p class="article-rp-date">@date</p>
+                    </a>
+                    <hr />
+                }
+
+            </div>
+            <div class="article-rp-div">
+                <h4 class="article-rp-title">Categories</h4>
+                <ul class="article-rp-lists">
+                    <li class="article-rp-list"><span class="rp-list-bold">Technology - </span>20 Posts</li>
+                    <li class="article-rp-list"><span class="rp-list-bold">Freelancing - </span>07 Posts</li>
+                    <li class="article-rp-list"><span class="rp-list-bold">Writing - </span>16 Posts</li>
+                    <li class="article-rp-list"><span class="rp-list-bold">Marketing - </span>11 Posts</li>
+                    <li class="article-rp-list"><span class="rp-list-bold">Business - </span>35 Posts</li>
+                    <li class="article-rp-list"><span class="rp-list-bold">Education - </span>14 Posts</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

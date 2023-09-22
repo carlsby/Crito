@@ -1,0 +1,14 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.NewsDetailsPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "_Layout.cshtml";
+    ViewData["PageTitle"] = @Model.Value("pageName");
+    ViewData["PageDescription"] = @Model.Value("pageDescription");
+    ViewData["PageKeywords"] = @Model.Value("pageKeywords");
+    ViewData["PageCreator"] = @Model.Value("pageCreator");
+}
+
+@await Html.PartialAsync("_Breadcrumb")
+@await Html.PartialAsync("NewsDetailsPage/_Article")
+@await Html.PartialAsync("HomePage/_ArticleNews")

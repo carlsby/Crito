@@ -963,10 +963,6 @@ header {
 }
 
 @media (min-width: 375px) {
-    .on-card {
-        display: block;
-        margin: 0 auto;
-    }
 
     .on-img {
         width: 100%;

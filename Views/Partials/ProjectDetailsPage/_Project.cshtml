@@ -5,10 +5,10 @@
 
 @{
     var userService = UserService;
-    var image = Model.Value<IPublishedContent>("articleImage");
+    var image = Model.Value<IPublishedContent>("projectImage");
 
 	var selection = Umbraco?.Content(Guid.Parse("0a097478-c50a-43e4-8428-40517a242aa0"))?
-    .ChildrenOfType("ArticleDetailsPage")?
+    .ChildrenOfType("ProjectDetailsPage")?
     .Where(x => x.IsVisible())
     .OrderByDescending(x => x.CreateDate).ToList();
     
@@ -25,17 +25,17 @@
             <ul class="article-list d-flex align-items-center">
                 <li class="article-item">@Model.CreateDate.ToString("MMM dd, yyyy")</li>
                 <li class="article-item"><i class="fa-solid fa-circle" id="article-circle"></i></li>
-                <li class="article-item">@Model.Value("articleCategory")</li>
+                <li class="article-item">@Model.Value("projectCategory")</li>
                 <li class="article-item"><i class="fa-solid fa-circle" id="article-circle"></i></li>
                 <li class="article-item">@Model.CreatorName(userService)</li>
             </ul>
             <img class="article-img" src="@image!.MediaUrl()" />
             <p class="article-p">
-                @Model.Value("articleContent")
+                @Model.Value("projectContent")
             </p>
             <div class="article-tags">
                 <ul class="article-tags-list">
-                    @foreach (var tag in Model.Value<IEnumerable<string>>("articleTags")!)
+                    @foreach (var tag in Model.Value<IEnumerable<string>>("projectTags")!)
                     {
                         <li class="article-tag">@tag</li>
                     }
@@ -65,17 +65,6 @@
                     <hr />
                 }
 
-            </div>
-            <div class="article-rp-div">
-                <h4 class="article-rp-title">Categories</h4>
-                <ul class="article-rp-lists">
-                    <li class="article-rp-list"><span class="rp-list-bold">Technology - </span>20 Posts</li>
-                    <li class="article-rp-list"><span class="rp-list-bold">Freelancing - </span>07 Posts</li>
-                    <li class="article-rp-list"><span class="rp-list-bold">Writing - </span>16 Posts</li>
-                    <li class="article-rp-list"><span class="rp-list-bold">Marketing - </span>11 Posts</li>
-                    <li class="article-rp-list"><span class="rp-list-bold">Business - </span>35 Posts</li>
-                    <li class="article-rp-list"><span class="rp-list-bold">Education - </span>14 Posts</li>
-                </ul>
             </div>
         </div>
     </div>

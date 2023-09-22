@@ -1,5 +1,5 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ArticlePage>
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.NewsPage>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
 	Layout = "_Layout.cshtml";
@@ -10,5 +10,5 @@
 }
 
 @await Html.PartialAsync("_Breadcrumb")
-@await Html.PartialAsync("ArticlePage/_OurNews")
+@await Html.PartialAsync("NewsPage/_OurNews")
 @await Html.PartialAsync("_Newsletter")

@@ -10,7 +10,7 @@
     }
 
 	var selection = Umbraco?.Content(Guid.Parse("0a097478-c50a-43e4-8428-40517a242aa0"))?
-    .ChildrenOfType("ArticleDetailsPage")?
+    .ChildrenOfType("NewsDetailsPage")?
     .Where(x => x.IsVisible())
     .OrderByDescending(x => x.CreateDate).ToList();
     
