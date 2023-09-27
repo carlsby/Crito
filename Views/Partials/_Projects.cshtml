@@ -2,52 +2,61 @@
 @using Umbraco.Cms.Core.Models.PublishedContent;
 
 @{
-    var itemsPerPage = 6;
+    var currentPage = Umbraco.AssignedContentItem;
+    var itemsPerPage = 4;
     var pageNumber = 1;
+
     if (!int.TryParse(Context.Request.Query["page"], out pageNumber))
     {
         pageNumber = 1;
     }
 
-	var selection = Umbraco.Content(Guid.Parse("d142b028-8c04-4a06-8305-2072745672f3"))
-    .ChildrenOfType("projectDetailsPage")
+    if (currentPage.Url() == "/projects" || currentPage.Url() == "/projects/")
+    {
+        itemsPerPage = 6;
+    }
+
+    var selection = Umbraco.Content(Guid.Parse("d142b028-8c04-4a06-8305-2072745672f3"))?
+    .ChildrenOfType("projectDetailsPage")?
     .Where(x => x.IsVisible())
     .OrderByDescending(x => x.CreateDate);
 
     var totalArticles = selection?.Count() ?? 0;
     var pagedItems = selection?.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
-    
 }
 
-<div class="container on-con mb-3">
-    <div class="row d-flex justify-content-baseline">
-        
+<div class="container project-con">
+    <p class="project-title">Project & Case Studies</p>
+    <h1 class="project-header-title">Let's Looks Our Global Projects</h1>
+    <div class="row">
         @if (pagedItems != null)
         {
             @foreach (var item in pagedItems)
-        	{
-        	    var url = item.Url();
-                var dayOfMonth = item.CreateDate.Day;
-                var month = item.CreateDate.ToString("MMM");
+            {
+                var url = item.Url();
                 var image = item.Value<IPublishedContent>("projectImage");
-                var category = item.Value("projectCategory");
                 var title = item.Name();
-                    <div class="col-6 col-lg-4 on-card">
-                        <a href="@url" class="article-link">
-                            <div class="on-date">
-                                <h5 class="on-date-number">@dayOfMonth</h5>
-                                <p class="on-date-month">@month</p>
-                            </div>
-                            <img class="on-img" src="@image!.MediaUrl()" />
-                            <p class="on-underline-p">@category</p>
-                            <h4 class="on-underline-title">@title</h4>
-                        </a>
+
+                if (item.Key == Model.Key)
+                {
+                    continue;
+                }
+
+                <div class="col-6 mb-3">
+                    <a href="@url" class="project-btn">
+                        <img class="project-img" src="@image!.MediaUrl()" /> 
+                    </a>
+                    <h5 class="project-col-text">@title</h5>
+                    <hr>
+                    <div class="project-btn-div">
+                        <a href="@url" class="project-btn">Read More <i class="fa-light fa-arrow-up-right"></i></a>
+                    </div>
                 </div>
             }
-    	}
-        
+        }
     </div>
-    @if (totalArticles > itemsPerPage)
+
+    @if (totalArticles > itemsPerPage && currentPage.Url() == "/projects/" || totalArticles > itemsPerPage && currentPage.Url() == "/projects")
     {
         <nav class="on-pagination" aria-label="Page navigation">
             @if (pageNumber > 1)
@@ -78,5 +87,4 @@
 
         </nav>
     }
-   
 </div>

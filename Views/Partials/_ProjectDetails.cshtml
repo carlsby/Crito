@@ -7,10 +7,11 @@
     var userService = UserService;
     var image = Model.Value<IPublishedContent>("projectImage");
 
-	var selection = Umbraco?.Content(Guid.Parse("0a097478-c50a-43e4-8428-40517a242aa0"))?
-    .ChildrenOfType("ProjectDetailsPage")?
-    .Where(x => x.IsVisible())
-    .OrderByDescending(x => x.CreateDate).ToList();
+	var selection = Umbraco.Content(Guid.Parse("d142b028-8c04-4a06-8305-2072745672f3"))?
+    .ChildrenOfType("projectDetailsPage")?
+    .Where(x => x.IsVisible());
+
+
     
     var totalArticles = selection?.Count() ?? 0;
 

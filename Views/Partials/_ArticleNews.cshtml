@@ -2,11 +2,17 @@
 @using Umbraco.Cms.Core.Models.PublishedContent;
 
 @{
-    var itemsPerPage = 6;
+    var currentPage = Umbraco.AssignedContentItem;
+    var itemsPerPage = 3;
     var pageNumber = 1;
     if (!int.TryParse(Context.Request.Query["page"], out pageNumber))
     {
         pageNumber = 1;
+    }
+
+    if (currentPage.Url() == "/news" || currentPage.Url() == "/news/")
+    {
+        itemsPerPage = 6;
     }
 
 	var selection = Umbraco?.Content(Guid.Parse("0a097478-c50a-43e4-8428-40517a242aa0"))?
@@ -19,10 +25,19 @@
     
 }
 
-<div class="container on-con">
-    <h1 class="on-title">
-        Our News & Articles
-    </h1>
+<div class="container an-con">
+    <p class="an-title">Article & News</p>
+    <div class="row">
+        <div class="col-9">
+            <h1 class="an-header-title">Get Every Single Articles & News</h1>
+        </div>
+        @if (currentPage.Url() == "/")
+        {
+            <div class="col-3 d-flex justify-content-end">
+                <a href="/news" class="an-ba-btn">Browse Articles <i class="fa-light fa-arrow-up-right"></i></a>
+            </div>
+        }
+    </div>
     <div class="row">
         
         @if (pagedItems != null)
@@ -36,6 +51,11 @@
                 var category = item.Value("articleCategory");
                 var title = item.Name();
                 var description = item.Value("articlePreamble");
+
+                if (item.Key == Model.Key)
+                {
+                    continue;
+                }
         	
                     <div class="col-6 col-lg-4 on-card">
                         <a href="@url" class="article-link">
@@ -53,7 +73,7 @@
     	}
         
     </div>
-    @if (totalArticles > itemsPerPage)
+    @if (totalArticles > itemsPerPage && currentPage.Url() == "/news/" || totalArticles > itemsPerPage && currentPage.Url() == "/news/")
     {
         <nav class="on-pagination" aria-label="Page navigation">
             @if (pageNumber > 1)
@@ -86,4 +106,3 @@
     }
    
 </div>
-

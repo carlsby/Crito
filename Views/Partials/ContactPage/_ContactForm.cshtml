@@ -1,5 +1,9 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 
+@{
+    var contactForm = new Crito.Models.ContactForm();
+}
+
 <div class="container con-for-con">
     <div class="row d-flex justify-content-center">
         <div class="col-4 con-card">
@@ -9,8 +13,8 @@
                 </div>
                 <div class="col-10 con-undercard">
                     <p class="con-title">Visit us</p>
-                    <p class="con-info">Sveavägen 31</p>
-                    <p class="con-info">111 34 STOCKHOLM</p>
+                    <p class="con-info">@Model.Value("contactInformationStreetName")</p>
+                    <p class="con-info">@Model.Value("contactInformationPostalCode") @Model.Value("contactInformationCity")</p>
                 </div>
             </div>
         </div>
@@ -21,8 +25,8 @@
                 </div>
                 <div class="col-10 con-undercard">
                     <p class="con-title">Call us</p>
-                    <p class="con-info">+46 (8) 121 470 50</p>
-                    <p class="con-info">+46 (8) 121 470 51</p>
+                    <p class="con-info">@Model.Value("contactInformationPhoneNumber1")</p>
+                    <p class="con-info">@Model.Value("contactInformationPhoneNumber2")</p>
                 </div>
             </div>
         </div>
@@ -33,8 +37,8 @@
                 </div>
                 <div class="col-10 con-undercard">
                     <p class="con-title">Email us</p>
-                    <p class="con-info">info@crito.com</p>
-                    <p class="con-info">support@crito.com</p>
+                    <p class="con-info">@Model.Value("contactInformationEmail1")</p>
+                    <p class="con-info">@Model.Value("contactInformationEmail2")</p>
                 </div>
             </div>
         </div>
@@ -42,11 +46,29 @@
 
     <div class="contact-form-con">
         <h1 class="contact-form-title">Leave us a message for any information.</h1>
-        <form>
-            <input class="contact-input" placeholder="Name*"/>
-            <input class="contact-input" placeholder="Email*" />
-            <input class="contact-input contact-message" placeholder="Your Message*" />
-            <button class="btn btn-warning contact-btn">Send Message <i class="fa-light fa-arrow-up-right"></i></button>
-        </form>
+
+        @if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+        {
+            <div class="alert alert-success" role="alert">
+                <strong>@TempData["SuccessMessage"]</strong>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+        {
+            <div class="alert alert-danger" role="alert">
+                <strong>Something went wrong.</strong><br/>@TempData["ErrorMessage"]
+            </div>
+        }
+
+
+        @using (Html.BeginUmbracoForm("Index", "Contacts", FormMethod.Post))
+        {
+            <input asp-for="@contactForm.Name" class="contact-input" placeholder="Name*" />
+            <input asp-for="@contactForm.Email" class="contact-input" placeholder="Email*" />
+            <input asp-for="@contactForm.Message" class="contact-input contact-message" placeholder="Your Message*" />
+            <button type="submit" class="btn btn-warning contact-btn">Send Message <i class="fa-light fa-arrow-up-right"></i></button>
+        }
+
     </div>
 </div>
