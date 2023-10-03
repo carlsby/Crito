@@ -1,16 +1,24 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    var newsletterForm = new Crito.Models.NewsletterForm();
+}
+
 <section class="nr-section">
     <div class="container nr-con">
+        @using (Html.BeginUmbracoForm("Index", "Subscriber", FormMethod.Post))
+        {
         <div class="row d-flex align-items-center">
             <div class="col-6">
                 <h1 class="nr-title">Get News Updates By Signup</h1>
             </div>
             <div class="col-4 d-flex justify-content-end">
-                <input class="nr-input" placeholder="username@domain.com"/>
+                <input asp-for="@newsletterForm.Email" type="email" name="email" class="nr-input" placeholder="username@domain.com" />
             </div>
             <div class="col-2 d-flex justify-content-end">
                 <button class="btn btn-warning nr-btn">Subscribe <i class="fa-light fa-arrow-up-right"></i></button>
             </div>
         </div>
+        }
     </div>
 </section>

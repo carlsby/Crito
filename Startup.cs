@@ -1,3 +1,7 @@
+using Crito.Contexts;
+using Crito.Services;
+using Microsoft.EntityFrameworkCore;
+
 namespace Crito
 {
     public class Startup
@@ -29,6 +33,17 @@ namespace Crito
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataContext>(x => x.UseSqlite(_config.GetConnectionString("SqliteDB")));
+            services.AddScoped<SubscriberService>();
+
+            services.AddScoped(provider =>
+            {
+                var context = provider.GetRequiredService<DataContext>();
+
+                var prefixedEmail = "carlsbytest@outlook.com";
+                return new EmailService(prefixedEmail, "smtp-mail.outlook.com", 587, "carlsbytest@outlook.com", "", context);
+            });
+
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
                 .AddWebsite()

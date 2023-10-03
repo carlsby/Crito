@@ -1,0 +1,29 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Services;
+@using Umbraco.Cms.Core.Models.PublishedContent;
+@inject IUserService UserService;
+
+@{
+
+	var selection = Umbraco.Content(Guid.Parse("fd2d998a-93a4-4eaa-b32c-d6bef6238cad"))
+    .ChildrenOfType("serviceDetailsPage")
+    .Where(x => x.IsVisible());
+
+    
+    var totalArticles = selection?.Count() ?? 0;
+
+}
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="d-flex justify-content-center">
+                @Model.Name()
+            </h1>
+            <p class="">
+                @Model.Value("serviceIngress")
+            </p>
+
+        </div>
+    </div>
+</div>

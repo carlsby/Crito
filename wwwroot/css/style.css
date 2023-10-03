@@ -63,12 +63,11 @@ header {
 
 .Nav {
     padding-top: 20px;
-    display: flex;
-    justify-content: space-between;
 }
 
     .Nav a {
         color: gray;
+        margin-right: 10px;
     }
 
         .Nav a:hover {
@@ -109,6 +108,12 @@ header {
     }
 }
 
+@media (min-width: 1200px) {
+
+    .Nav a {
+        margin-right: 15px;
+    }
+}
 
 /* HERO */
 
@@ -217,12 +222,9 @@ header {
 
 /* ABOUT COMPANY */
 
-.ac-con {
-    width: 60%;
-}
 
 .ac-img {
-    width: 400px;
+    width: 70%;
 }
 
 .ac-title {
@@ -241,8 +243,6 @@ header {
 
 .ac-bottom-div {
     font-size: 18px;
-    position: absolute;
-    bottom: 10%;
 }
 
 .ac-details {
@@ -345,8 +345,6 @@ header {
 
 .service-section {
     background-color: #F0EFE9;
-    padding-top: 90px;
-    padding-bottom: 80px;
 }
 
 .service-title {
@@ -463,7 +461,7 @@ header {
 
 .wcu-title {
     margin-bottom: 30px;
-    font-size: 50px;
+    font-size: 40px;
     width: 75%;
 }
 
@@ -732,7 +730,7 @@ header {
 }
 
     .article-link:hover {
-        color: gray;
+        opacity: 0.8;
     }
 
 .an-card {
@@ -913,7 +911,13 @@ header {
 .on-card {
     margin-bottom: 20px;
     position: relative;
+    border: 2px solid white;
 }
+
+    .on-card:hover {
+        border: 2px solid lightgray;
+        transition: 0.3s;
+    }
 
 .on-date {
     position: absolute;
@@ -951,6 +955,7 @@ header {
 .on-img {
     height: 250px;
     object-fit: cover;
+    border: 2px solid white;
 }
 
 .on-title {

@@ -73,6 +73,7 @@
     	}
         
     </div>
+
     @if (totalArticles > itemsPerPage && currentPage.Url() == "/news/" || totalArticles > itemsPerPage && currentPage.Url() == "/news/")
     {
         <nav class="on-pagination" aria-label="Page navigation">
@@ -101,8 +102,6 @@
                     <i class="fa-sharp fa-solid fa-chevron-right" id="on-arrow"></i>
                 </a>
             }
-
         </nav>
-    }
-   
+    } 
 </div>

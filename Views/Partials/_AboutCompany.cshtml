@@ -3,7 +3,7 @@
 
 <div class="container ac-con">
     <div class="row">
-        <div class="col-12 col-lg-6 ac-col">
+        <div class="col-12 col-lg-6 ac-col d-flex justify-content-center">
                 @{
                     var interviewImage = Model.Value<MediaWithCrops>("interviewImage");
                     if (interviewImage != null)
@@ -37,9 +37,9 @@
                 @Model.Value("interviewText")
             </p>
             <div class="ac-bottom-div">
-                <button class="ac-btn">
+                <a class="ac-btn" href="/contact/about">
                     Learn More <i class="fa-light fa-arrow-up-right"></i>
-                </button>
+                </a>
                 <a class="ac-intro-link" href="#"><i class="fa-solid fa-play play-btn"></i> Intro Video</a>
             </div>
         </div>
