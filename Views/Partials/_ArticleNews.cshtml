@@ -15,11 +15,13 @@
         itemsPerPage = 6;
     }
 
-	var selection = Umbraco?.Content(Guid.Parse("0a097478-c50a-43e4-8428-40517a242aa0"))?
+    var selection = Umbraco?.Content(Guid.Parse("0a097478-c50a-43e4-8428-40517a242aa0"))?
     .ChildrenOfType("NewsDetailsPage")?
     .Where(x => x.IsVisible())
     .OrderByDescending(x => x.CreateDate).ToList();
-    
+
+    selection?.RemoveAll(x => x.Name == Model.Name);
+
     var totalArticles = selection?.Count() ?? 0;
     var pagedItems = selection?.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
     
@@ -51,11 +53,6 @@
                 var category = item.Value("articleCategory");
                 var title = item.Name();
                 var description = item.Value("articlePreamble");
-
-                if (item.Key == Model.Key)
-                {
-                    continue;
-                }
         	
                     <div class="col-6 col-lg-4 on-card">
                         <a href="@url" class="article-link">
