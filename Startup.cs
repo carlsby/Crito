@@ -40,7 +40,7 @@ namespace Crito
             {
                 var context = provider.GetRequiredService<DataContext>();
 
-                return new EmailService("carlsbytest@outlook.com", "smtp-mail.outlook.com", 587, "carlsbytest@outlook.com", "", context);
+                return new EmailService("carlsbytest@outlook.com", "smtp-mail.outlook.com", 587, "carlsbytest@outlook.com", "BytMig123!", context);
             });
 
             services.AddUmbraco(_env, _config)
